@@ -2,11 +2,18 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+    id("kotlin-kapt")
+    id("androidx.room")
 }
 
 android {
     namespace = "com.anucodes.vrid"
     compileSdk = 35
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 
     defaultConfig {
         applicationId = "com.anucodes.vrid"
@@ -39,6 +46,10 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
 
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
@@ -50,6 +61,16 @@ dependencies {
     //Navigation
     implementation("androidx.compose.ui:ui:1.7.8")
     implementation("androidx.navigation:navigation-compose:2.8.7")
+
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.31.5-beta")
+
+    //Room Implementation
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:2.6.1")
 
     //Retrofit dependency
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
